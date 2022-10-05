@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hashtag: MyString
+  diary_hashtag_id: MyString
+  is_deleted: false
+
+two:
+  hashtag: MyString
+  diary_hashtag_id: MyString
+  is_deleted: false

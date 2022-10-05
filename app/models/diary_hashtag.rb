@@ -1,0 +1,2 @@
+class DiaryHashtag < ApplicationRecord
+end
