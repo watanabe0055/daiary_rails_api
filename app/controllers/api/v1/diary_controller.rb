@@ -2,6 +2,7 @@ module Api
   module V1
     class DiaryController < ApplicationController
 
+        #日記一覧API
       def index
           if current_api_v1_user
             user = current_api_v1_user.id
@@ -16,6 +17,7 @@ module Api
           end
       end
       
+      #日記詳細API
       def show
         if current_api_v1_user
           diary = Diary.find(params[:id])
