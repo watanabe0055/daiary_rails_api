@@ -13,3 +13,7 @@
 10.times do |number|
   Diary.create(user_id: '1',emotion_id: '1',diary_hashtag_id: '1',title: "title_#{number}",content: "content_#{number}",is_deleted: 'false',created_at: ' 2021-04-04 15:01:19',updated_at: ' 2021-04-04 15:01:19')
 end
+
+5.times do |number|
+  Diary.create(user_id: '3',emotion_id: '1',diary_hashtag_id: '1',title: "title_#{number}",content: "content_#{number}",is_deleted: 'false',created_at: ' 2021-05-04 15:01:19',updated_at: ' 2021-05-04 15:01:19')
+end
