@@ -11,9 +11,13 @@
 #Diary.create!(user_id: '1',emotion_id: '1',diary_hashtag_id: '1',title: 'test',content: 'test_text',is_deleted: 'false',created_at: ' 2021-04-04 15:01:19',updated_at: ' 2021-04-04 15:01:19')
 #Diary.create!(user_id: '1',emotion_id: '1',diary_hashtag_id: '1',title: 'test',content: 'test_text',is_deleted: 'false',created_at: ' 2021-04-04 15:01:19',updated_at: ' 2021-04-04 15:01:19')
 10.times do |number|
-  Diary.create(user_id: '1',emotion_id: '1',diary_hashtag_id: '1',title: "title_#{number}",content: "content_#{number}",is_deleted: 'false',created_at: ' 2021-04-04 15:01:19',updated_at: ' 2021-04-04 15:01:19')
+  Diary.create(user_id: '1',emotion_id: '1',diary_hashtag_id: '1',title: "title_#{number}",content: "content_#{number}",is_deleted: 'false')
 end
 
 5.times do |number|
-  Diary.create(user_id: '3',emotion_id: '1',diary_hashtag_id: '1',title: "title_#{number}",content: "content_#{number}",is_deleted: 'false',created_at: ' 2021-05-04 15:01:19',updated_at: ' 2021-05-04 15:01:19')
+  Diary.create(user_id: '3',emotion_id: '1',diary_hashtag_id: '1',title: "title_#{number}",content: "content_#{number}",is_deleted: 'false')
 end
+
+Emotion.create(emotion: 'angry',is_deleted: 'false')
+Emotion.create(emotion: 'sad',is_deleted: 'false')
+Emotion.create(emotion: 'impressed',is_deleted: 'false')
