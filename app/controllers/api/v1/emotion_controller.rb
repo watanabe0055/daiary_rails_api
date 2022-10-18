@@ -41,7 +41,9 @@ module Api
 
       def update
         editEmotion = Emotion.find_by(id: params[:id])
-        if editEmotion.update(postEmootion)
+        if editEmotion.is_deleted == true
+          render status: 400, json: { status: 'deleted_emotion_data', message: '削除済みのデータです' }
+        elsif editEmotion.update(postEmootion) && editEmotion.is_deleted == false
           render status: 200, json: { status: 'SUCCESS', message: 'Created the post', data: editEmotion }
         else
           render status: 400, json: { status: 'Falled Error', message: '日記の保存に失敗しました'}
