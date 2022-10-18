@@ -81,7 +81,7 @@ module Api
             render status: 400, json: { status: 'deleted_diary_data', message: '削除済みのデータです' }
           elsif deleteDiary.user_id != current_api_v1_user.id.to_s
             render status: 400, json: { status: 'browsing_authority_diary_data', message: '権限のないデータです' }
-          elsif deleteDiary.update(is_deleted: 1)
+          elsif deleteDiary.update(is_deleted: true)
             render status: 200, json: { status: 'SUCCESS', message: 'Deleted the post', deleteDiary: deleteDiary }
           else
             render status: 400, json: { status: 'Erroy', message: '例外処理' }
