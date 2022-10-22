@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
+      get 'diary/search', to: 'diary#search'
       resources :diary
       resources :emotion
       mount_devise_token_auth_for 'User', at: 'auth'

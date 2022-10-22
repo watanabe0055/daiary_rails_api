@@ -91,6 +91,13 @@ module Api
         end
       end
 
+      #月単位の検索
+      def search
+        monthSerarch = params["to"]
+        searchDiary = Diary.where(created_at: monthSerarch.in_time_zone.all_month).where(is_deleted: false).select('id','user_id','emotion_id','diary_hashtag_id','title','content').order(created_at: "desc" )
+        render status: 200, json: { status: 'SUCCESS', message: 'searched the post', searchDiary: searchDiary }
+      end
+
       private
         def post_diary_params
           params.permit(:title, :content, :emotion_id).merge(user_id: current_api_v1_user.id)
