@@ -94,8 +94,16 @@ module Api
       #月単位の検索
       def search
         monthSerarch = params["to"]
-        searchDiary = Diary.where(created_at: monthSerarch.in_time_zone.all_month).where(is_deleted: false).select('id','user_id','emotion_id','diary_hashtag_id','title','content').order(created_at: "desc" )
-        render status: 200, json: { status: 'SUCCESS', message: 'searched the post', searchDiary: searchDiary }
+        searchDiary = Diary.where(created_at: monthSerarch.in_time_zone.all_month).where(user_id: current_api_v1_user).where(is_deleted: false).select('id','user_id','emotion_id','diary_hashtag_id','title','content').order(created_at: "desc" )
+        if current_api_v1_user
+          if searchDiary.length >= 1
+          render status: 200, json: { status: 'SUCCESS', message: 'searched the post', searchDiary: searchDiary }
+        else
+          render status: 400, json: { status: 'Not find Data', message: '該当の月の日記はありませんでした'}
+        end
+        else
+          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+        end
       end
 
       private
