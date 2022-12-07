@@ -1,6 +1,9 @@
 module Api
   module V1
     class DiaryController < ApplicationController
+      def test
+        render status: 200, json: { status: 'SUCCESS'}
+      end
       #日記投稿API
       def create
         if current_api_v1_user
@@ -19,14 +22,14 @@ module Api
       def index
         if current_api_v1_user
           user = current_api_v1_user.id
-          allDairy = Diary.joins(:user).select('id','user_id','emotion_id','diary_hashtag_id','title','content').where(user_id: user,is_deleted: false).order(created_at: "desc")
+          allDairy = Diary.joins(:user).select('id','user_id','emotion_id','diary_hashtag_id','title','content','created_at').where(user_id: user,is_deleted: false).order(created_at: "desc")
           if allDairy.length > 1
             render status: 200, json: { diary: allDairy}
           else
-            render json: { status: 'Failure Get Diary Data', message: "日記が存在しません" }
+            render status: 200, json: { status: 'Failure Get Diary Data', message: "日記が存在しません" }
           end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
       

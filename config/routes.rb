@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
+      get 'diary/test', to: 'diary#test'
       get 'diary/search', to: 'diary#search'
       resources :diary
       resources :emotion
