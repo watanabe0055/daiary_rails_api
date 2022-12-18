@@ -15,19 +15,23 @@ module Api
             render status: 400, json: { status: 'Falled Error', message: '日記の保存に失敗しました'}
           end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400,json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
 
       #日記一覧API
       def index
         if current_api_v1_user
+
+          #ログイン中のユーザー
           user = current_api_v1_user.id
+
+          #取得条件は、ユーザIDの一致と削除フラグがfalseであること
           allDairy = Diary.joins(:user).select('id','user_id','emotion_id','diary_hashtag_id','title','content','created_at').where(user_id: user,is_deleted: false).order(created_at: "desc")
           if allDairy.length > 1
             render status: 200, json: { diary: allDairy}
           else
-            render status: 200, json: { status: 'Failure Get Diary Data', message: "日記が存在しません" }
+            render status: 400, json: { status: 'Failure Get Diary Data', message: "日記が存在しません" }
           end
         else
           render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
@@ -52,18 +56,18 @@ module Api
             render status: 400, json: { status: 'Erroy', message: '例外処理' }
           end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
 
       #日記編集API
       def update
-        
           updateDiary = Diary.find_by(id: params[:id])
+        if current_api_v1_user
           puts"ログイン認証"
           if updateDiary == nil
             render status: 400, json: { status: 'not_exist_diary_data', message: '存在しないレコードです' }
-          elsif updateDiary.update(post_edit_diary_params) && (updateDiary.is_deleted == false)
+          elsif updateDiary.update(post_edit_diary_params) && (updateDiary.is_deleted == false && updateDiary.user_id == current_api_v1_user.id.to_s)
             render status: 200, json: { status: 'SUCCESS', message: 'Updated the post', updateDiary: updateDiary }
           elsif updateDiary.is_deleted == true
             render status: 400, json: { status: 'deleted_diary_data', message: '削除済みのデータです' }
@@ -72,6 +76,9 @@ module Api
           else
             render status: 400, json: { status: 'Erroy', message: '例外処理' }
           end
+        else
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
+        end
       end
 
       def destroy
@@ -89,7 +96,7 @@ module Api
             render status: 400, json: { status: 'Erroy', message: '例外処理' }
           end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
 
@@ -104,7 +111,7 @@ module Api
           render status: 400, json: { status: 'Not find Data', message: '該当の月の日記はありませんでした'}
         end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
 
