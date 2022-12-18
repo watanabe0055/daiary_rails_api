@@ -56,7 +56,7 @@ module Api
             render status: 400, json: { status: 'Erroy', message: '例外処理' }
           end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
 
@@ -77,7 +77,7 @@ module Api
             render status: 400, json: { status: 'Erroy', message: '例外処理' }
           end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
 
@@ -96,7 +96,7 @@ module Api
             render status: 400, json: { status: 'Erroy', message: '例外処理' }
           end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
 
@@ -111,7 +111,7 @@ module Api
           render status: 400, json: { status: 'Not find Data', message: '該当の月の日記はありませんでした'}
         end
         else
-          render json: { status: 'Not Loggend in', message: "ログインしてください" }
+          render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
         end
       end
 
