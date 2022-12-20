@@ -11,8 +11,10 @@ module Api
           newDiary = Diary.new(post_diary_params)
           if newDiary.save
             render status: 200, json: { status: 'SUCCESS', message: 'Created the post', data: newDiary }
-          else
-            render status: 400, json: { status: 'Falled Error', message: '日記の保存に失敗しました'}
+          elsif newDiary.valid? == false
+            render status: 400, json: { status: 'Erroy', message: newDiary.errors }
+          else 
+            render status: 400, json: { status: 'Erroy', message: "例外処理" }
           end
         else
           render status: 400,json: { status: 'Not Loggend in', message: "ログインしてください" }
@@ -22,10 +24,8 @@ module Api
       #日記一覧API
       def index
         if current_api_v1_user
-
           #ログイン中のユーザー
           user = current_api_v1_user.id
-
           #取得条件は、ユーザIDの一致と削除フラグがfalseであること
           allDairy = Diary.joins(:user).select('id','user_id','emotion_id','diary_hashtag_id','title','content','created_at').where(user_id: user,is_deleted: false).order(created_at: "desc")
           if allDairy.length > 1
@@ -64,7 +64,6 @@ module Api
       def update
           updateDiary = Diary.find_by(id: params[:id])
         if current_api_v1_user
-          puts"ログイン認証"
           if updateDiary == nil
             render status: 400, json: { status: 'not_exist_diary_data', message: '存在しないレコードです' }
           elsif updateDiary.update(post_edit_diary_params) && (updateDiary.is_deleted == false && updateDiary.user_id == current_api_v1_user.id.to_s)
@@ -73,8 +72,10 @@ module Api
             render status: 400, json: { status: 'deleted_diary_data', message: '削除済みのデータです' }
           elsif updateDiary.user_id != current_api_v1_user.id.to_s
             render status: 400, json: { status: 'browsing_authority_diary_data', message: '権限のないデータです' }
-          else
-            render status: 400, json: { status: 'Erroy', message: '例外処理' }
+          elsif updateDiary.valid? == false
+            render status: 400, json: { status: 'Erroy', message: updateDiary.errors }
+          else 
+            render status: 400, json: { status: 'Erroy', message: "例外処理" }
           end
         else
           render status: 400, json: { status: 'Not Loggend in', message: "ログインしてください" }
